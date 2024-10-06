@@ -5,8 +5,10 @@ Introduction:
 
      
 Structure:
-  1. my-rpc-server: netty server; specific affair like user (expose interface, including the real implementation)
+  1. my-rpc-server: netty server; specific implementation of user-api
   2. my-rpc-consumer: netty client; dynamic proxy function; annotation for remote call; test
+  3. user-api: user's interface that are exposed
+  4. my-rpc-common: common class like Response
 
 
 Usage:
