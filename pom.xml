@@ -11,6 +11,8 @@
     <modules>
         <module>my-rpc-server</module>
         <module>my-rpc-consumer</module>
+        <module>user-api</module>
+        <module>my-rpc-common</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

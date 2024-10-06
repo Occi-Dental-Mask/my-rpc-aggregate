@@ -1,18 +1,15 @@
 package com.occi.org.netty.handler;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.occi.commons.Response;
 import com.occi.org.netty.medium.Medium;
-import com.occi.org.netty.model.Response;
 import com.occi.org.netty.model.ServerRequest;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.*;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import io.netty.util.concurrent.EventExecutorGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @description:
@@ -21,6 +18,7 @@ import io.netty.util.concurrent.EventExecutorGroup;
  */
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
+    Logger logger = LoggerFactory.getLogger(ServerHandler.class);
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg.toString().equals("pong")) {
@@ -34,24 +32,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         Medium medium = Medium.newInstance();
         Response response = medium.process(request);
         ctx.channel().writeAndFlush(JSONObject.toJSONString(response) + "\r\n");
-//        if (msg instanceof FullHttpRequest) {
-//            FullHttpRequest request = (FullHttpRequest) msg;
-//
-//            // 创建响应
-//            FullHttpResponse response = new DefaultFullHttpResponse(
-//                    HttpVersion.HTTP_1_1,
-//                    HttpResponseStatus.OK,
-//                    Unpooled.wrappedBuffer("hello, I am server".getBytes())
-//            );
-//
-//            response.headers().set("Content-Type", "text/plain");
-//            response.headers().set("Content-Length", response.content().readableBytes());
-//
-//            // 发送响应
-//            ctx.writeAndFlush(response);
-//        } else {
-//            super.channelRead(ctx, msg);
-//        }
     }
 
     @Override
@@ -74,7 +54,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
+        logger.error("server caught exception", cause);
         ctx.close();
     }
 }

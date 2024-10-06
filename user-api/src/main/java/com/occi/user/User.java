@@ -1,4 +1,4 @@
-package com.occi.org.user;
+package com.occi.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * @description:
  * @author: occi
- * @date: 2024/10/1
+ * @date: 2024/10/6
  */
 @AllArgsConstructor
 @Data

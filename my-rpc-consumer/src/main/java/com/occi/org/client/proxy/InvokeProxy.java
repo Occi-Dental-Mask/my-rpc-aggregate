@@ -1,6 +1,7 @@
 package com.occi.org.client.proxy;
 
 import com.occi.org.client.annotation.RemoteInvoke;
+import com.occi.org.client.core.ResultFuture;
 import com.occi.org.client.core.TCPClient;
 import com.occi.org.client.param.ClientRequest;
 import org.springframework.beans.BeansException;
@@ -44,7 +45,15 @@ public class InvokeProxy implements BeanPostProcessor {
                         clientRequest.setContent(args[0]);
                         String command = methodMap.get(method).getName() + "." + method.getName();
                         clientRequest.setCommand(command);
-                        return TCPClient.send(clientRequest);
+                        // 异步发送请求
+                        ResultFuture resultFuture = TCPClient.send(clientRequest);
+                        // 设置超时时间
+                        Long timeOut = 60L;
+                        // 阻塞,超时等待结果
+                        if (resultFuture == null) {
+                            return null;
+                        }
+                        return resultFuture.get(timeOut);
                     }
                 });
                 try {

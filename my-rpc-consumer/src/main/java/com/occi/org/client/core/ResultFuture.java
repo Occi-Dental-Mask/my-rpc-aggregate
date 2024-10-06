@@ -1,7 +1,7 @@
 package com.occi.org.client.core;
 
+import com.occi.commons.Response;
 import com.occi.org.client.param.ClientRequest;
-import com.occi.org.client.param.Response;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +89,6 @@ public class ResultFuture {
             lock.unlock();
         }
         return this.response;
-
     }
 
     private boolean notDone() {

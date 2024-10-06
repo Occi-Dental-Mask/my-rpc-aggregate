@@ -2,7 +2,7 @@ package com.occi.org.netty.medium;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.occi.org.netty.model.Response;
+import com.occi.commons.Response;
 import com.occi.org.netty.model.ServerRequest;
 
 import java.lang.reflect.Method;

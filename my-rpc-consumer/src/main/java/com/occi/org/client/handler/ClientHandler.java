@@ -1,9 +1,9 @@
 package com.occi.org.client.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.occi.commons.Response;
 import com.occi.org.client.core.ResultFuture;
 
-import com.occi.org.client.param.Response;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;

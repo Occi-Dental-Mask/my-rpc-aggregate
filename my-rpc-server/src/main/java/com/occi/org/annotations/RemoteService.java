@@ -13,6 +13,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface Remote {
+public @interface RemoteService {
     String value() default "";
 }

@@ -1,16 +1,16 @@
 package com.occi;
 
 import com.alibaba.fastjson.JSONObject;
+import com.occi.commons.Response;
 import com.occi.org.client.annotation.RemoteInvoke;
-import com.occi.org.client.param.Response;
-import com.occi.org.user.User;
-import com.occi.org.user.UserRemote;
+import com.occi.org.client.core.ResultFuture;
+import com.occi.user.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import com.occi.user.UserService;
 /**
  * @description:
  * @author: occi
@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class TestRemoteDynamic {
     
     @RemoteInvoke
-    private UserRemote userRemote;
+    private UserService userRemote;
 
 
     @Test
@@ -34,7 +34,7 @@ public class TestRemoteDynamic {
             Response response = userRemote.saveUser(new User(100011L, "张三", "123456", "2", "2"));
             System.out.println(JSONObject.toJSONString(response));
         }
-        // 测试10万次耗时17秒
+        // 测试10万次耗时14秒
         System.out.println("耗时秒数：" + (System.currentTimeMillis() - start) / 1000);
     }
 }

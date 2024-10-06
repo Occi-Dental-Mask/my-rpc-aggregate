@@ -2,11 +2,11 @@ package com.occi.org.client.core;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.occi.commons.Response;
 import com.occi.org.client.constants.Constants;
 import com.occi.org.client.handler.ClientHandler;
 import com.occi.org.client.param.ClientRequest;
 import com.occi.org.client.factory.ZookeeperFactory;
-import com.occi.org.client.param.Response;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -77,16 +77,15 @@ public class TCPClient {
     }
 
     // every request is connected to one channel, one channel can handle multiple requests
-    public static Response send(ClientRequest request){
+    public static ResultFuture send(ClientRequest request){
         ChannelFuture f = ChannelManager.get(ChannelManager.position);
         if (f == null) {
             logger.error("channel is null or closed");
             return null;
         }
         f.channel().writeAndFlush(JSONObject.toJSONString(request)+"\r\n");
-        Long timeout = 60L;
         ResultFuture future = new ResultFuture(request);
-        return future.get(timeout);
+        return future;
     }
 
 }

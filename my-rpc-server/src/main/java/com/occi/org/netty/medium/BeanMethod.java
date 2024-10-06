@@ -12,7 +12,7 @@ public class BeanMethod {
     private Object bean;
     private Method method;
 
-    BeanMethod() {
+    BeanMethod(Object bean, Method method) {
         this.bean = bean;
         this.method = method;
     }

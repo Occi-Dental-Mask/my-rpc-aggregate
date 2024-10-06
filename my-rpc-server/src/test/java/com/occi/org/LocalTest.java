@@ -1,11 +1,11 @@
-package com.occi.org;
+//package com.occi.org;
 
 /**
  * @description:
  * @author: occi
  * @date: 2024/10/1
  */
-public class LocalTest {
+//public class LocalTest {
 
     // test for temporary purpose
 //    @Test
@@ -20,4 +20,4 @@ public class LocalTest {
 //        System.out.println(response.getResult());
 //        System.out.println("成功了");
 //    }
-}
+//}
