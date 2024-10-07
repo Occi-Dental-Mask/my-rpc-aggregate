@@ -18,10 +18,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if(msg.toString().equals("ping")){
-            System.out.println("收到读写空闲ping,向服务端发送pong");
+        if(msg.toString().equals("ping")) {
+            System.out.println("收到服务端的读空闲ping,向服务端发送pong");
             ctx.channel().writeAndFlush("pong\r\n");
-            // 交给下一个handler处理
+            return;
+        } else if (msg.toString().equals("pong")) {
+            System.out.println("收到服务端的pong消息，确认连接正常");
             return;
         }
         //设置response
@@ -34,8 +36,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         if (evt instanceof IdleStateEvent) {
             IdleStateEvent event = (IdleStateEvent) evt;
             if (event.state() == IdleState.WRITER_IDLE) {
-                System.out.println("写空闲，发送心跳");
-                ctx.writeAndFlush("heartbeat\r\n");
+                System.out.println("客户端写空闲，发送心跳");
+                ctx.writeAndFlush("ping\r\n");
+            } else if (event.state() == IdleState.ALL_IDLE) {
+                System.out.println("客户端读写空闲，断开连接");
+                // 断开连接
+                ctx.channel().close();
             }
         } else {
             super.userEventTriggered(ctx, evt);

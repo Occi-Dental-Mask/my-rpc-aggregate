@@ -54,7 +54,7 @@ public class ChannelManager {
 
     // 轮询获取 ChannelFuture
     public static ChannelFuture get(AtomicInteger i) {
-        ChannelFuture channelFuture = null;
+        ChannelFuture channelFuture;
         int size = channelFutures.size();
         if (i.get() >= size) {
             channelFuture = channelFutures.get(0);

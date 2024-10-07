@@ -22,8 +22,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg.toString().equals("pong")) {
-            System.out.println("收到客户端Pong消息，确认连接正常");
-            // 交给下一个handler处理
+            System.out.println("收到客户端pong消息，确认连接正常");
+            return;
+        } else if (msg.toString().equals("ping")) {
+            System.out.println("收到客户端的写空闲ping,向客户端发送pong");
+            ctx.channel().writeAndFlush("pong\r\n");
             return;
         }
         // msg:{"command":"com.occi.org.user.UserRemote.saveUser","content":{"address":"2","email":"123456","id":100011,"name":"张三","phone":"2"},"id":1}
@@ -39,13 +42,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         if (evt instanceof IdleStateEvent) {
             IdleStateEvent event = (IdleStateEvent) evt;
             if (event.state().equals(IdleState.READER_IDLE)) {
-                System.out.println("读空闲");
-//                ctx.channel().close();
-            } else if (event.state().equals(IdleState.WRITER_IDLE)) {
-                System.out.println("写空闲");
-            } else if (event.state().equals(IdleState.ALL_IDLE)) {
-                System.out.println("读写空闲");
+                System.out.println("服务端读空闲，发送ping消息");
                 ctx.channel().writeAndFlush("ping\r\n");
+            } else if (event.state().equals(IdleState.ALL_IDLE)) {
+                System.out.println("服务端读写空闲");
+                ctx.channel().close();
             }
         } else {
             super.userEventTriggered(ctx, evt);
