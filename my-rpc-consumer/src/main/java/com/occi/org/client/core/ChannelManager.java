@@ -56,12 +56,11 @@ public class ChannelManager {
     public static ChannelFuture get(AtomicInteger i) {
         ChannelFuture channelFuture;
         int size = channelFutures.size();
-        if (i.get() >= size) {
-            channelFuture = channelFutures.get(0);
-            ChannelManager.position = new AtomicInteger(1);
-        } else {
-            channelFuture = channelFutures.get(i.getAndIncrement());
+        if (size == 0) {
+            return null;
         }
+        int index = i.incrementAndGet() % size;
+        channelFuture = channelFutures.get(index);
         return channelFuture;
     }
 }
